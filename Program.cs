@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace AOC_Day1
@@ -18,30 +19,33 @@ namespace AOC_Day1
                     int currentCalorieSum = 0;
                     int currentLine = 0;
                     bool convertToInt;
-                   
+                    List<int> calorieSumList = new List<int>();
+
 
                     // Read and display lines from the file until the end of
                     // the file is reached.
 
                     while ((line = sr.ReadLine()) != null)
                     {
-                        convertToInt = int.TryParse(line, out currentLine); // Convert parsed string into an integer
-                        currentCalorieSum = currentCalorieSum + currentLine; // Add parsed integer to current calorie sum
+                        convertToInt = int.TryParse(line, out currentLine); 
+                        currentCalorieSum = currentCalorieSum + currentLine; 
                        
-                        if (string.IsNullOrWhiteSpace(line))  // If statement to see if line is blank and if so check against highest number
+                        if (string.IsNullOrWhiteSpace(line))  
                         {
                             if (currentCalorieSum > highestCalorieSum)
                             {
                                 highestCalorieSum = currentCalorieSum;
                                
                             }
-                            currentCalorieSum = 0; //reset currentCalorieSum for next iteration
-                        }
-
-                       
-                        
+                            calorieSumList.Add(currentCalorieSum);
+                            currentCalorieSum = 0; 
+                        }       
                     }
-                    Console.WriteLine("The highest Calorie sum is: " + highestCalorieSum);
+                    calorieSumList.Sort();
+                    calorieSumList.Reverse();
+                   Console.WriteLine("The highest calorie sum is: " + highestCalorieSum);
+                   int top3Calories = (calorieSumList[0] + calorieSumList[1] + calorieSumList[2]);
+                    Console.WriteLine("The sum of calories for the top 3 elves is: " + top3Calories);
                 }
             }
             catch (Exception e)
